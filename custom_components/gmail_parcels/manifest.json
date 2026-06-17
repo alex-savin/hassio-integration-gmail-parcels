@@ -1,0 +1,10 @@
+{
+  "domain": "gmail_parcels",
+  "name": "Gmail Parcels",
+  "version": "0.0.1",
+  "documentation": "https://github.com/alex-savin/hassio-apps",
+  "requirements": [],
+  "codeowners": ["@alex-savin"],
+  "iot_class": "local_push",
+  "config_flow": true
+}
