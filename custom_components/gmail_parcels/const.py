@@ -1,5 +1,5 @@
 DOMAIN = "gmail_parcels"
-DEFAULT_HOST = "http://addon:8080"
+DEFAULT_HOST = "http://a06ed963-gmail-parcels:8080"
 WS_ENDPOINT = "/ws"
 SENSOR_TYPE = "sensor"
 CONF_LOG_LEVEL = "log_level"
