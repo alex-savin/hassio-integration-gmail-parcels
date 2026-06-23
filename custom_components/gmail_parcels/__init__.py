@@ -27,7 +27,9 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Gmail Parcels from a config entry."""
-    url = entry.options.get(CONF_URL, entry.data.get(CONF_URL, f"{DEFAULT_HOST}{WS_ENDPOINT}"))
+    url = entry.options.get(
+        CONF_URL, entry.data.get(CONF_URL, f"{DEFAULT_HOST}{WS_ENDPOINT}")
+    )
     level_name = entry.options.get(
         CONF_LOG_LEVEL, entry.data.get(CONF_LOG_LEVEL, DEFAULT_LOG_LEVEL)
     ).upper()
@@ -45,9 +47,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await client.async_stop()
 
     # Register shutdown handler
-    entry.async_on_unload(
-        hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, _close)
-    )
+    entry.async_on_unload(hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, _close))
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True

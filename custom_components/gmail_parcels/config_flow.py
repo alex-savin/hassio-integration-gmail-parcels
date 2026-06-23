@@ -16,6 +16,7 @@ from .const import (
     WS_ENDPOINT,
 )
 
+
 class GmailParcelsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Gmail Parcels."""
 
@@ -42,7 +43,9 @@ class GmailParcelsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema(
                 {
                     vol.Required(CONF_URL, default=f"{DEFAULT_HOST}{WS_ENDPOINT}"): str,
-                    vol.Optional(CONF_LOG_LEVEL, default=DEFAULT_LOG_LEVEL): vol.In(LOG_LEVEL_CHOICES),
+                    vol.Optional(CONF_LOG_LEVEL, default=DEFAULT_LOG_LEVEL): vol.In(
+                        LOG_LEVEL_CHOICES
+                    ),
                 }
             ),
             errors=errors,
@@ -67,7 +70,9 @@ class GmailParcelsOptionsFlowHandler(config_entries.OptionsFlow):
                         CONF_URL,
                         default=self.entry.options.get(
                             CONF_URL,
-                            self.entry.data.get(CONF_URL, f"{DEFAULT_HOST}{WS_ENDPOINT}"),
+                            self.entry.data.get(
+                                CONF_URL, f"{DEFAULT_HOST}{WS_ENDPOINT}"
+                            ),
                         ),
                     ): str,
                     vol.Optional(

@@ -62,22 +62,33 @@ async def async_setup_entry(
 
     # Global counts (with a lean parcel list in attributes).
     for bucket in BUCKETS:
-        entities.append(ParcelsSensor(client, entry, device, bucket=bucket, with_list=True))
+        entities.append(
+            ParcelsSensor(client, entry, device, bucket=bucket, with_list=True)
+        )
 
     # Per-carrier: an active-count total (with list) plus one count per bucket.
     for name, slug in CARRIERS.items():
         entities.append(
-            ParcelsSensor(client, entry, device, slug=slug, carrier_name=name, with_list=True)
+            ParcelsSensor(
+                client, entry, device, slug=slug, carrier_name=name, with_list=True
+            )
         )
         for bucket in BUCKETS:
             entities.append(
-                ParcelsSensor(client, entry, device, slug=slug, carrier_name=name, bucket=bucket)
+                ParcelsSensor(
+                    client, entry, device, slug=slug, carrier_name=name, bucket=bucket
+                )
             )
 
     # Catch-all for parcels whose carrier we don't model.
     entities.append(
         ParcelsSensor(
-            client, entry, device, slug=OTHER_CARRIER_SLUG, carrier_name="Other", with_list=True
+            client,
+            entry,
+            device,
+            slug=OTHER_CARRIER_SLUG,
+            carrier_name="Other",
+            with_list=True,
         )
     )
 
@@ -134,7 +145,11 @@ class ParcelsSensor(SensorEntity):
         if self._slug:
             return f"{self._carrier_name} Parcels", self._slug, _CARRIER_ICON
         # Global bucket sensor.
-        return f"{_BUCKET_LABEL[self._bucket]} Parcels", self._bucket, _BUCKET_ICON[self._bucket]
+        return (
+            f"{_BUCKET_LABEL[self._bucket]} Parcels",
+            self._bucket,
+            _BUCKET_ICON[self._bucket],
+        )
 
     async def async_added_to_hass(self) -> None:
         self.async_on_remove(self._client.subscribe(self._handle_update))
